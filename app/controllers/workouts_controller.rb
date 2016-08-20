@@ -2,7 +2,7 @@ class WorkoutsController < ApplicationController
   before_action :find_workout, only: [:show, :edit, :update, :destroy]
 
   def index
-    @workouts = Workout.all
+    @workouts = Workout.all.order("created_at DESC")
   end
 
   def show
@@ -23,12 +23,11 @@ class WorkoutsController < ApplicationController
   end
 
   def edit
-    #code
   end
 
   def update
 
-    if @workout.update
+    if @workout.update(workout_params)
       redirect_to @workout
     else
       render "edit"
@@ -36,7 +35,8 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
-    #code
+    @workout.destroy
+    redirect_to root_path
   end
 
   private
